@@ -20,7 +20,7 @@ class ProcessTheClient(threading.Thread):
 					current_time = time.strftime("%H:%M:%S")
 					response = f"JAM {current_time}\r\n"
 					logging.warning(
-						f"[SERVER TIME] sending {response} to {self.address}"
+						f"[TIME SERVER] sending {response} to {self.address}"
 					)
 					self.connection.sendall(response.encode('utf-8'))
 				else:
@@ -36,7 +36,7 @@ class Server(threading.Thread):
 		threading.Thread.__init__(self)
 
 	def run(self):
-		self.my_socket.bind(('0.0.0.0',45000))
+		self.my_socket.bind(('0.0.0.0', 45000))
 		self.my_socket.listen(1)
 		while True:
 			self.connection, self.client_address = self.my_socket.accept()
