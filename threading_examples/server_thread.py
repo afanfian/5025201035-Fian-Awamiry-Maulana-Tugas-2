@@ -3,7 +3,6 @@ import socket
 import threading
 import logging
 import time
-import sys
 
 class ProcessTheClient(threading.Thread):
 	def __init__(self,connection,address):
@@ -54,4 +53,3 @@ def main():
 
 if __name__=="__main__":
 	main()
-
