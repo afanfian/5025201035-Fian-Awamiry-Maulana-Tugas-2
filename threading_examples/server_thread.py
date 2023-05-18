@@ -15,7 +15,17 @@ class ProcessTheClient(threading.Thread):
 		while True:
 			data = self.connection.recv(32)
 			if data:
-				self.connection.sendall(data)
+				logging.warning(
+					f"[TIME SERVER] received {data} from {self.address}")
+				if data.startswith(b'TIME') and data.endswith(b'\r\n'):
+					current_time = time.strftime("%H:%M:%S")
+					response = f"JAM {current_time}\r\n"
+					logging.warning(
+						f"[SERVER TIME] sending {response} to {self.address}"
+					)
+					self.connection.sendall(response.encode('utf-8'))
+				else:
+					break
 			else:
 				break
 		self.connection.close()
