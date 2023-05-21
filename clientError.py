@@ -11,12 +11,15 @@ def kirim_data():
     sock.connect(server_address)
 
     try:
-        msg = 'OIOI\r\n'
-        logging.warning(f"sending {msg}")
-        sock.sendall(msg.encode('utf-8'))
-        data = sock.recv(32)
-        result = data.decode('utf-8')
-        logging.warning(f"{result}")
+        message = 'TESTING\r\n'
+        logging.warning(f"[CLIENT] sending {message}")
+        sock.sendall(message.encode('utf-8'))
+        amount_received = 0
+        amount_expected = len(message)
+        while amount_received < amount_expected:
+            data = sock.recv(16)
+            amount_received += len(data)
+            logging.warning(f"[DITERIMA DARI SERVER] {data}")
     finally:
         logging.warning("closing")
         sock.close()
