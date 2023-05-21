@@ -14,12 +14,15 @@ class ClientProcessor(threading.Thread):
             data = self.connection.recv(32)
             if not data:
                 break
-
             logging.warning(f"[TIME SERVER] received {data} from {self.address}")
+            # Diawali dengan string “TIME dan diakhiri dengan karakter 13 dan karakter 10”
             if data.startswith(b'TIME') and data.endswith(b'\r\n'):
-                current_time = time.strftime("%H:%M:%S")
-                response = f"JAM {current_time}\r\n"
+                # <jam> berisikan info jam dalam format “hh:mm:ss” dan diakhiri dengan karakter 13 dan karakter 10
+                request_time = time.strftime("%H:%M:%S")
+                # Diawali dengan “JAM<spasi><jam>”
+                response = f"JAM {request_time}\r\n"
                 logging.warning(f"[TIME SERVER] sending {response} to {self.address}")
+                # Dalam bentuk string (UTF-8)
                 self.connection.sendall(response.encode('utf-8'))
             else:
                 break
